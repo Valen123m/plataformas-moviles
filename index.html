@@ -1,1 +1,69 @@
+// Implementación de las funciones
 
+function suma(num1, num2) {
+    return num1 + num2;
+}
+
+function elevarAlCubo(num) {
+    return num ** 3;
+}
+
+function restoDivisionEntera(dividendo, divisor) {
+    return dividendo % divisor;
+}
+
+function numeroPi() {
+    return Math.PI;
+}
+
+function numeroRandom() {
+    return Math.random();
+}
+
+function mejorNumeroRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function transformarMayuscula(palabra) {
+    return palabra.toUpperCase();
+}
+
+function primeraLetra(palabra) {
+    return palabra.charAt(0);
+}
+
+function ultimaLetra(palabra) {
+    return palabra.charAt(palabra.length - 1);
+}
+
+function primeraLetraMayuscula(palabra) {
+    return palabra.charAt(0).toUpperCase() + palabra.slice(1);
+}
+
+function palabraAListaDeLetras(palabra) {
+    return palabra.split('');
+}
+
+function listadoDeLetrasAPalabra(lista) {
+    return lista.join('');
+}
+
+function palabraInvertida(palabra) {
+    return palabra.split('').reverse().join('');
+}
+
+// Llamadas a las funciones y salida en la consola
+
+console.log("suma(2,3): ", suma(2, 3));
+console.log("elevarAlCubo(3): ", elevarAlCubo(3));
+console.log("restoDivisionEntera(3,2): ", restoDivisionEntera(3, 2));
+console.log("numeroPi(): ", numeroPi());
+console.log("numeroRandom(): ", numeroRandom());
+console.log("mejorNumeroRandom(1,6): ", mejorNumeroRandom(1, 6));
+console.log("transformarMayuscula(\"Plataformas Móviles\"): ", transformarMayuscula("Plataformas Móviles"));
+console.log("primeraLetra(\"Plataformas\"): ", primeraLetra("Plataformas"));
+console.log("ultimaLetra(\"Plataformas\"): ", ultimaLetra("Plataformas"));
+console.log("primeraLetraMayuscula(\"plataformas\"): ", primeraLetraMayuscula("plataformas"));
+console.log("palabraAListaDeLetras(\"hola\"): ", palabraAListaDeLetras("hola"));
+console.log("listadoDeLetrasAPalabra([\"h\", \"o\", \"l\", \"a\"]): ", listadoDeLetrasAPalabra(["h", "o", "l", "a"]));
+console.log("palabraInvertida(\"hola\"): ", palabraInvertida("hola"));

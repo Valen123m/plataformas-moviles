@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tablero de Puntos - DOM y JavaScript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+        <h1>Tablero de Puntos</h1>
+        <p class="lead">El objetivo es construir un tablero para mostrar el puntaje de un partido entre 2 equipos.</p>
+        <h2 class="h3">Objetivos Adicionales</h2>
+        <ol>
+            <li>En lugar de tener un único botón para incrementar los puntos del equipo, se desea tener un botón para <strong>incrementar (+)</strong> y otro para <strong>decrementar (-)</strong> los puntos de cada equipo.</li>
+            <li>Agregar la acción de <strong>invertir puntaje</strong>, para intercambiar los puntos entre el equipo local y el equipo visitante.</li>
+            <li>Agregar la acción de <strong>finalizar partido</strong>, que deshabilita los botones de puntaje, para que ya no se puedan sumar puntos. Los botones se tendrían que volver a habilitar cuando se reinicia el tablero.</li>
+        </ol>
+
+        <!-- Card de Aplicación -->
+        <div class="card">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-5">
+                        <span class="display-1" id="puntos-local">0</span>
+                        <p class="m-0">Local</p>
+                    </div>
+                    <div class="col-2">
+                        <span class="display-1">:</span>
+                    </div>
+                    <div class="col-5">
+                        <span class="display-1" id="puntos-visitante">0</span>
+                        <p class="m-0">Visitante</p>
+                    </div>
+                </div>
+
+                <hr class="hr">
+
+                <h2>Actualizar Contador</h2>
+                <div class="row">
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-primary" id="incrementar-local">
+                            Incrementar Local (+)
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-primary" id="decrementar-local">
+                            Decrementar Local (-)
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-primary" id="incrementar-visitante">
+                            Incrementar Visitante (+)
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-primary" id="decrementar-visitante">
+                            Decrementar Visitante (-)
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-danger" id="reiniciar-partido">
+                            Reinicio
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-warning" id="invertir-puntaje">
+                            Invertir Puntaje
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-secondary" id="finalizar-partido">
+                            Finalizar Partido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        let puntosLocal = 0;
+        let puntosVisitante = 0;
+        let partidoFinalizado = false;
+
+        /**
+         * ActualizarPuntos()
+         * Esta función actualiza los puntos en el tablero.
+         */
+        function actualizarPuntos() {
+            document.getElementById('puntos-local').textContent = puntosLocal;
+            document.getElementById('puntos-visitante').textContent = puntosVisitante;
+        }
+
+        /**
+         * IncrementarPuntos()
+         * Esta función incrementa los puntos del equipo indicado.
+         */
+        function incrementarPuntos(equipo) {
+            if (!partidoFinalizado) {
+                if (equipo === 'local') {
+                    puntosLocal++;
+                } else if (equipo === 'visitante') {
+                    puntosVisitante++;
+                }
+                actualizarPuntos();
+            }
+        }
+
+        /**
+         * DecrementarPuntos()
+         * Esta función decrementa los puntos del equipo indicado.
+         */
+        function decrementarPuntos(equipo) {
+            if (!partidoFinalizado) {
+                if (equipo === 'local' && puntosLocal > 0) {
+                    puntosLocal--;
+                } else if (equipo === 'visitante' && puntosVisitante > 0) {
+                    puntosVisitante--;
+                }
+                actualizarPuntos();
+            }
+        }
+
+        /**
+         * InvertirPuntaje()
+         * Esta función intercambia los puntos entre el equipo local y el equipo visitante.
+         */
+        function invertirPuntaje() {
+            if (!partidoFinalizado) {
+                const temp = puntosLocal;
+                puntosLocal = puntosVisitante;
+                puntosVisitante = temp;
+                actualizarPuntos();
+            }
+        }
+
+        /**
+         * FinalizarPartido()
+         * Esta función finaliza el partido, deshabilitando los botones de puntaje.
+         */
+        function finalizarPartido() {
+            partidoFinalizado = true;
+            document.getElementById('incrementar-local').disabled = true;
+            document.getElementById('incrementar-visitante').disabled = true;
+            document.getElementById('decrementar-local').disabled = true;
+            document.getElementById('decrementar-visitante').disabled = true;
+            document.getElementById('invertir-puntaje').disabled = true;
+            document.getElementById('finalizar-partido').disabled = true;
+        }
+
+        /**
+         * ReiniciarPartido()
+         * Esta función reinicia el tablero, habilitando los botones de puntaje.
+         */
+        function reiniciarPartido() {
+            puntosLocal = 0;
+            puntosVisitante = 0;
+            partidoFinalizado = false;
+            actualizarPuntos();
+            document.getElementById('incrementar-local').disabled = false;
+            document.getElementById('incrementar-visitante').disabled = false;
+            document.getElementById('decrementar-local').disabled = false;
+            document.getElementById('decrementar-visitante').disabled = false;
+            document.getElementById('invertir-puntaje').disabled = false;
+            document.getElementById('finalizar-partido').disabled = false;
+        }
+
+        // Escuchar eventos de los botones
+        document.getElementById('incrementar-local').addEventListener('click', () => incrementarPuntos('local'));
+        document.getElementById('incrementar-visitante').addEventListener('click', () => incrementarPuntos('visitante'));
+        document.getElementById('decrementar-local').addEventListener('click', () => decrementarPuntos('local'));
+        document.getElementById('decrementar-visitante').addEventListener('click', () => decrementarPuntos('visitante'));
+        document.getElementById('invertir-puntaje').addEventListener('click', invertirPuntaje);
+        document.getElementById('finalizar-partido').addEventListener('click', finalizarPartido);
+        document.getElementById('reiniciar-partido').addEventListener('click', reiniciarPartido);
+    </script>
+</body>
+</html>
+
